@@ -22,7 +22,7 @@ public class Main {
 
         Entrenadores entrenador1 = new Entrenadores("Ash");
 
-// Agregar Pokémon al conjunto del entrenador
+
         entrenador1.getConjuntoPokemons().apilar(Charizard);
         entrenador1.getConjuntoPokemons().apilar(Gyarados);
         entrenador1.getConjuntoPokemons().apilar(Arcanine);
