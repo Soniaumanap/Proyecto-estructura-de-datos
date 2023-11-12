@@ -67,6 +67,26 @@ public abstract class Pokemon {
     public void setTipo(int tipo) {
         this.tipo = tipo;
     }
+    public abstract int elegirAtaque();
+    public boolean estaVivo() {
+    return vida > 0;
+}
+ public void recibirDanio(int danio) {
+        int nuevaVida = this.vida - danio;
+
+        if (nuevaVida < 0) {
+            nuevaVida = 0;
+        }
+
+        this.vida = nuevaVida;
+
+        System.out.println(this.nomPokemon + " ha recibido " + danio + " de daño. Vida restante: " + this.vida);
+        
+        if (this.vida == 0) {
+            System.out.println(this.nomPokemon + " ha sido derrotado.");
+        }
+    }
+  public abstract double calcularMultiplicador(Pokemon defensor);
 }
 
 

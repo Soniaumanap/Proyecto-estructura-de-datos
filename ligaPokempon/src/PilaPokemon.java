@@ -9,7 +9,7 @@
  */
 public class PilaPokemon {
 
-    private NodoPokemon top;
+    protected NodoPokemon top;
 
     public PilaPokemon() {
         this.top = null;
@@ -54,5 +54,9 @@ public class PilaPokemon {
         }
         return s;
     }
-
+       public void eliminarPokemon(){
+           if(!top.getPokemon().estaVivo()){
+               top=top.getSiguiente();
+           }
+       }
 }

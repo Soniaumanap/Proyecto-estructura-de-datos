@@ -10,24 +10,17 @@
 public class Main {
 
     public static void main(String[] args) {
-        Pokemon Charizard = new Charizard();
-        Pokemon Gyarados = new Gyarados();
-        Pokemon Typlosion = new Typlosion();
-        Pokemon Snorlax = new Snorlax();
-        Pokemon Oranguru = new Oranguru();
-        Pokemon Greninja = new Greninja();
-        Pokemon Arcanine = new Arcanine();
-        Pokemon Swampert = new Swampert();
-        Pokemon Ursaring = new Ursaring();
+        EntrenadorUsu entrenadorUsuario = new EntrenadorUsu("Ash");
+        Entrenadores entrenadorAdversario = new Entrenadores("Gary");
 
-        Entrenadores entrenador1 = new Entrenadores("Ash");
+        Charizard pokemonAguaAdversario = new Charizard();
+        Swampert charizardUsuario = new Swampert();
+        // Agrega Pokémon a los entrenadores
+        entrenadorUsuario.getPokemons().inserta(charizardUsuario);
+        entrenadorAdversario.getConjuntoPokemons().apilar(pokemonAguaAdversario);
 
-
-        entrenador1.getConjuntoPokemons().apilar(Charizard);
-        entrenador1.getConjuntoPokemons().apilar(Gyarados);
-        entrenador1.getConjuntoPokemons().apilar(Arcanine);
-        entrenador1.getConjuntoPokemons().apilar(Ursaring);
-
-        System.out.println(entrenador1.toString());
+        // Crea la batalla y la inicia
+        Batalla batalla = new Batalla(entrenadorUsuario, entrenadorAdversario);
+        batalla.iniciarBatalla();
     }
 }
