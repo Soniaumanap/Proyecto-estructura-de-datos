@@ -5,57 +5,77 @@ import javax.swing.JOptionPane;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 /**
  *
  * @author brand
  */
-public class Arcanine extends Pokemon implements IFuego{
+public class Arcanine extends Pokemon implements IFuego {
+
     public Arcanine() {
-        nomPokemon="Arcanine";
-        vida=115;
-        ataque=50;
-        defensa=35;
-        ataqueEsp=70;
-        defensaEsp=60;
-    }
-       
-    @Override
-    public int ataqueLanzallamas() {
-        int danio=0;
-        return danio;
-
+        nomPokemon = "Arcanine";
+        vida = 115;
+        ataque = 50;
+        defensa = 35;
+        ataqueEsp = 70;
+        defensaEsp = 60;
     }
 
     @Override
-    public int ataqueAnilloIgneo() {
-                int danio=0;
-        return danio;
+    public int ataqueLanzallamas(Pokemon defensor) {
+        int danioBase = 40;
+        int danioTotal = (danioBase + getAtaque()) - defensor.defensaEsp;
+        int multiplicadorTipo = (int) calcularMultiplicador(defensor);
+        danioTotal = (int) (danioTotal * multiplicadorTipo);
+        System.out.println(getNomPokemon() + " usa Lanzallamas y causa " + danioTotal + " de daño.");
+        return danioTotal;
     }
 
     @Override
-    public int ataqueColmilloIgneo() {
-                int danio=0;
-        return danio;
+    public int ataqueAnilloIgneo(Pokemon defensor) {
+
+        int danioBase = 30;
+        int danioTotal = (danioBase + getAtaque()) - defensor.defensaEsp;
+        int multiplicadorTipo = (int) calcularMultiplicador(defensor);
+        danioTotal = (int) (danioTotal * multiplicadorTipo);
+        System.out.println(getNomPokemon() + " usa Anillo Igneo y causa " + danioTotal + " de daño.");
+        return danioTotal;
+    }
+
+    // Ataques físicos de tipo Fuego
+    @Override
+    public int ataqueColmilloIgneo(Pokemon defensor) {
+        int danioBase = 30;
+        int danioTotal = (danioBase + getAtaque()) - defensor.defensa;
+        int multiplicadorTipo = (int) calcularMultiplicador(defensor);
+        danioTotal = (int) (danioTotal * multiplicadorTipo);
+        System.out.println(getNomPokemon() + " usa Colmillo Igneo y causa " + danioTotal + " de daño.");
+        return danioTotal;
     }
 
     @Override
-    public int ataquepuñoFuego() {
-                int danio=0;
-        return danio;
+    public int ataquePuñoFuego(Pokemon defensor) {
+        int danioBase = 30;
+        int danioTotal = (danioBase + getAtaque()) - defensor.defensa;
+        int multiplicadorTipo = (int) calcularMultiplicador(defensor);
+        danioTotal = (int) (danioTotal * multiplicadorTipo);
+        System.out.println(getNomPokemon() + " usa Puño Fuego y causa " + danioTotal + " de daño.");
+        return danioTotal;
     }
 
     @Override
     public String toString() {
-        return "Arcanine" ;
+        return "Arcanine";
     }
-    
+
+    @Override
     public boolean estaVivo() {
-    return vida > 0;
-}
-    public int elegirAtaque() {
+        return vida > 0;
+    }
+
+    @Override
+    public int elegirAtaque(Pokemon defensor) {
         String[] opciones = {"Lanzallamas", "Anillo Ígneo", "Colmillo Ígneo", "Puño Fuego"};
-        
+
         // Mostrar un cuadro de diálogo con las opciones y obtener la elección del usuario
         String eleccion = (String) JOptionPane.showInputDialog(null, "Elige un ataque", "Elegir Ataque",
                 JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
@@ -63,36 +83,57 @@ public class Arcanine extends Pokemon implements IFuego{
         // Mapear la elección del usuario al código de ataque
         switch (eleccion) {
             case "Lanzallamas":
-                return ataqueLanzallamas();
+                return ataqueLanzallamas(defensor);
             case "Anillo Ígneo":
-                return ataqueAnilloIgneo();
+                return ataqueAnilloIgneo(defensor);
             case "Colmillo Ígneo":
 
-                return ataqueColmilloIgneo();
+                return ataqueColmilloIgneo(defensor);
             case "Puño Fuego":
-    
-                return ataquepuñoFuego();
+
+                return ataquePuñoFuego(defensor);
             default:
-                // En caso de opción no válida, podrías manejarlo de alguna manera (por ejemplo, volver a pedir la elección)
+
                 return 0; // Puedes ajustar esto según tus necesidades
         }
     }
-        @Override
+
+    @Override
     public void recibirDanio(int danio) {
         super.recibirDanio(danio);
-}
-    
+    }
+
     @Override
     public double calcularMultiplicador(Pokemon defensor) {
         if (defensor instanceof INormal) {
-            return 1.5; // Fuerte contra Normal
+            return 1.5; 
         } else if (defensor instanceof IAgua) {
-            return 0.5; // Débil contra Agua
+            return 0.5; 
         } else {
-            return 1.0; // No hay multiplicador (neutral)
+            return 1.0;
         }
     }
 
+    @Override
+    public int elegirAtaqueAleatorio(Pokemon defensor) {
+
+        
+        int eleccion = (int) (Math.random() * 4);
+
+        switch (eleccion) {
+            case 0:
+                return ataqueLanzallamas(defensor);
+            case 1:
+                return ataqueAnilloIgneo(defensor);
+            case 2:
+
+                return ataqueColmilloIgneo(defensor);
+            case 3:
+
+                return ataquePuñoFuego(defensor);
+            
+            default:
+                return 0;
+        }
+    }
 }
-
-

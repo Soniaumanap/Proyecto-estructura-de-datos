@@ -9,9 +9,9 @@
  */
 public interface INormal {
     //ataques especiales
-    public int ataqueHiperrayo();
-    public int ataqueMeteoronola();
+    public int ataqueHiperrayo(Pokemon defensor);
+    public int ataqueMeteoronola(Pokemon defensor);
     //ataques fisicos
-    public int ataquePisoton();
-    public int ataqueVelocitdadExtrema();
+    public int ataquePisoton(Pokemon defensor);
+    public int ataqueVelocitdadExtrema(Pokemon defensor);
 }

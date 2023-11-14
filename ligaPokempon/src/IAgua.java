@@ -9,11 +9,11 @@
  */
 public interface IAgua {
 //ataques especiales
-    public int ataqueHidroBomba();
-    public int ataqueSurf();
+    public int ataqueHidroBomba(Pokemon defensor);
+    public int ataqueSurf(Pokemon defensor);
 
 //Ataques fisicos
-    public int ataqueMartillazo();
-    public int ataqueAquaCola();
+    public int ataqueMartillazo(Pokemon defensor);
+    public int ataqueAquaCola(Pokemon defensor);
 
 }

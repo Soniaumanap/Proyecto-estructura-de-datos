@@ -1,5 +1,5 @@
 
-import java.util.Random;
+
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -42,7 +42,7 @@ public class Entrenadores extends PilaPokemon {
         return "Entrenador " + nombre +"\n"+ "Pokemons \n" + conjuntoPokemons +"\n _____________________________";
     }
 public boolean tienePokemonVivo() {
-        NodoPokemon actual = top;
+        NodoPokemon actual = conjuntoPokemons.top;
 
         while (actual != null) {
             if (actual.getPokemon().estaVivo()) {
@@ -54,20 +54,27 @@ public boolean tienePokemonVivo() {
     }
 
          public Pokemon elegirPokemonParaBatalla() {
-        // Implementa lógica para seleccionar un Pokémon, por ejemplo, el primero de la lista
-        if (conjuntoPokemons != null && conjuntoPokemons.top.getPokemon() != null) {
-            return conjuntoPokemons.top.getPokemon();  // Suponiendo que getCabeza() devuelve el primer nodo de la lista
-        } else {
-            // Manejo de caso en el que no hay Pokémon disponibles
-            System.out.println("No hay Pokémon disponibles para la batalla.");
-            return null;
-        }
-    }
-   public int elegirAtaqueAleatorio() {
-        Random rand = new Random();
-        int opcionAleatoria = rand.nextInt(4) + 1; // Número aleatorio entre 1 y 4
+    if (conjuntoPokemons != null && conjuntoPokemons.top != null) {
 
-        // Puedes imprimir un mensaje para indicar la elección aleatoria (opcional)
+        if (conjuntoPokemons.top.getPokemon() != null && !conjuntoPokemons.top.getPokemon().estaVivo()) {
+           
+
+ 
+            conjuntoPokemons.desapilar();
+             System.out.println("El Pokémon actual ha muerto." + nombre+" envia a: "+conjuntoPokemons.top.getPokemon().getNomPokemon());
+        }
+
+
+        return conjuntoPokemons.top != null ? conjuntoPokemons.top.getPokemon() : null;
+    } else {
+        System.out.println("No hay Pokémon disponibles para la batalla.");
+        return null;
+    }
+}
+   public int elegirAtaqueAleatorio() {
+
+        int opcionAleatoria = (int) (Math.random() * 4); 
+
         System.out.println("El entrenador " + nombre + " eligió aleatoriamente el ataque " + opcionAleatoria);
 
         return opcionAleatoria;

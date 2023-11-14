@@ -67,9 +67,15 @@ public abstract class Pokemon {
     public void setTipo(int tipo) {
         this.tipo = tipo;
     }
-    public abstract int elegirAtaque();
+    public abstract int elegirAtaque(Pokemon defensor);
+    public abstract int elegirAtaqueAleatorio(Pokemon defensor);
+    
     public boolean estaVivo() {
-    return vida > 0;
+        boolean vivo=false;
+        if(vida > 0){
+            vivo=true;
+        }
+    return vivo ;
 }
  public void recibirDanio(int danio) {
         int nuevaVida = this.vida - danio;

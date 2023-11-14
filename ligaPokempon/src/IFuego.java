@@ -9,9 +9,9 @@
  */
 public interface IFuego {
     //ataques especiales
-    public int ataqueLanzallamas();
-    public int ataqueAnilloIgneo();
+    public int ataqueLanzallamas(Pokemon defensor);
+    public int ataqueAnilloIgneo(Pokemon defensor);
     //ataques fisicos
-    public int ataqueColmilloIgneo();
-     public int ataquepuñoFuego();
+    public int ataqueColmilloIgneo(Pokemon defensor);
+     public int ataquePuñoFuego(Pokemon defensor);
 }
