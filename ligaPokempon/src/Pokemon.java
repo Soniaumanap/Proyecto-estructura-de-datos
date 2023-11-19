@@ -10,7 +10,19 @@
 public abstract class Pokemon {
 
     protected String nomPokemon;
-    protected int vida, ataque, defensa, ataqueEsp, defensaEsp,tipo;
+    protected int vida, ataque, defensa, ataqueEsp, defensaEsp,tipo,vidaMaxima;
+        public void restaurarVida() {
+        // Restaurar la vida del Pokémon a su valor máximo
+        vida = vidaMaxima;
+    }
+
+    public int getVidaMaxima() {
+        return vidaMaxima;
+    }
+
+    public void setVidaMaxima(int vidaMaxima) {
+        this.vidaMaxima = vidaMaxima;
+    }
 
     public String getNomPokemon() {
         return nomPokemon;
@@ -92,7 +104,7 @@ public abstract class Pokemon {
             System.out.println(this.nomPokemon + " ha sido derrotado.");
         }
     }
-  public abstract double calcularMultiplicador(Pokemon defensor);
+  public abstract void calcularMultiplicador(Pokemon defensor);
 }
 
 

@@ -55,15 +55,13 @@ public boolean tienePokemonVivo() {
 
          public Pokemon elegirPokemonParaBatalla() {
     if (conjuntoPokemons != null && conjuntoPokemons.top != null) {
+        NodoPokemon pokemonActual = conjuntoPokemons.top;
 
-        if (conjuntoPokemons.top.getPokemon() != null && !conjuntoPokemons.top.getPokemon().estaVivo()) {
-           
-
- 
+        if (pokemonActual.getPokemon() != null && !pokemonActual.getPokemon().estaVivo()) {
             conjuntoPokemons.desapilar();
-             System.out.println("El Pokémon actual ha muerto." + nombre+" envia a: "+conjuntoPokemons.top.getPokemon().getNomPokemon());
+            System.out.println("El Pokémon actual ha muerto. " + nombre + " envía a: " +
+                    (conjuntoPokemons.top != null ? conjuntoPokemons.top.getPokemon().getNomPokemon() : "Ninguno"));
         }
-
 
         return conjuntoPokemons.top != null ? conjuntoPokemons.top.getPokemon() : null;
     } else {
@@ -79,4 +77,14 @@ public boolean tienePokemonVivo() {
 
         return opcionAleatoria;
     }
+   
+   public void restaurarVidaPokemon() {
+    NodoPokemon actual = conjuntoPokemons.top;
+    while (actual != null) {
+        actual.getPokemon().restaurarVida();
+        actual = actual.getSiguiente();
+    }
 }
+}
+   
+

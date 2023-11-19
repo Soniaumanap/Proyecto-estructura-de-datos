@@ -34,14 +34,15 @@ public class PilaPokemon {
     }
 
     public Pokemon desapilar() {
-        if (esVacia()) {
-            return null;
-        } else {
-            top = top.getSiguiente();
+        if (top != null) {
             Pokemon pokemonDesapilado = top.getPokemon();
+            top = top.getSiguiente();
             return pokemonDesapilado;
-        }
+        } else {
 
+            System.out.println("La pila está vacía");
+            return null;
+        }
     }
        public String toString(){
         String s="";

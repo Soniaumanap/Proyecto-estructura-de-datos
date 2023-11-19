@@ -13,6 +13,7 @@ public class Swampert extends Pokemon implements IAgua {
 
     public Swampert() {
         nomPokemon = "Swampert";
+        vidaMaxima = 190;
         vida = 190;
         ataque = 55;
         defensa = 45;
@@ -22,51 +23,72 @@ public class Swampert extends Pokemon implements IAgua {
 
     @Override
     public int ataqueHidroBomba(Pokemon defensor) {
-        int danioBase = 110;
-        int danioTotal = (danioBase + getAtaqueEsp()) - defensor.defensaEsp;
+        int probabilidad = (int) (Math.random() * 10);
+        int danioTotal;
+        if (probabilidad == 5) {
+            danioTotal = 0;
+            System.out.println(getNomPokemon() + "fallo el ataque");
+        } else {
+            calcularMultiplicador(defensor);
+            int danioBase = 90;
+            danioTotal = (danioBase + getAtaqueEsp()) - defensor.defensaEsp;
 
-        int multiplicadorTipo = (int) calcularMultiplicador(defensor);
-        danioTotal = (int) (danioTotal * multiplicadorTipo);
-
-        System.out.println(getNomPokemon() + " usa HidroBomba y causa " + danioTotal + " de daño.");
+            System.out.println(getNomPokemon() + " usa HidroBomba y causa " + danioTotal + " de daño.");
+        }
         return danioTotal;
     }
 
     @Override
     public int ataqueSurf(Pokemon defensor) {
-        int danioBase = 110;
-        int danioTotal = (danioBase + getAtaque()) - defensor.defensaEsp;
+        int probabilidad = (int) (Math.random() * 10);
+        int danioTotal;
+        if (probabilidad == 5) {
+            danioTotal = 0;
+            System.out.println(getNomPokemon() + "fallo el ataque");
+        } else {
+            calcularMultiplicador(defensor);
 
-        int multiplicadorTipo = (int) calcularMultiplicador(defensor);
-        danioTotal = (int) (danioTotal * multiplicadorTipo);
+            int danioBase = 90;
+            danioTotal = (danioBase + getAtaque()) - defensor.defensaEsp;
 
-        System.out.println(getNomPokemon() + " usa HidroBomba y causa " + danioTotal + " de daño.");
+            System.out.println(getNomPokemon() + " usa HidroBomba y causa " + danioTotal + " de daño.");
+        }
         return danioTotal;
     }
 
-
+    // Ataques físicos de tipo Agua
     @Override
     public int ataqueMartillazo(Pokemon defensor) {
-        int danioBase = 110;
-        int danioTotal = (danioBase + getAtaque()) - defensor.defensa;
+        int probabilidad = (int) (Math.random() * 10);
+        int danioTotal;
+        if (probabilidad == 5) {
+            danioTotal = 0;
+            System.out.println(getNomPokemon() + "fallo el ataque");
+        } else {
+            calcularMultiplicador(defensor);
 
-        int multiplicadorTipo = (int) calcularMultiplicador(defensor);
-        danioTotal = (int) (danioTotal * multiplicadorTipo);
+            int danioBase = 70;
+            danioTotal = (danioBase + getAtaque()) - defensor.defensa;
 
-        System.out.println(getNomPokemon() + " usa Aqua Cola y causa " + danioTotal + " de daño.");
+            System.out.println(getNomPokemon() + " usa Aqua Cola y causa " + danioTotal + " de daño.");
+        }
         return danioTotal;
     }
 
     @Override
     public int ataqueAquaCola(Pokemon defensor) {
+        int probabilidad = (int) (Math.random() * 10);
+        int danioTotal;
+        if (probabilidad == 5) {
+            danioTotal = 0;
+            System.out.println(getNomPokemon() + "fallo el ataque");
+        } else {
+            calcularMultiplicador(defensor);
+            int danioBase = 80;
+            danioTotal = (danioBase + getAtaque()) - defensor.defensa;
 
-        int danioBase = 110;
-        int danioTotal = (danioBase + getAtaque()) - defensor.defensa;
-
-        int multiplicadorTipo = (int) calcularMultiplicador(defensor);
-        danioTotal = (int) (danioTotal * multiplicadorTipo);
-
-        System.out.println(getNomPokemon() + " usa Aqua Cola y causa " + danioTotal + " de daño.");
+            System.out.println(getNomPokemon() + " usa Aqua Cola y causa " + danioTotal + " de daño.");
+        }
         return danioTotal;
     }
 
@@ -81,7 +103,8 @@ public class Swampert extends Pokemon implements IAgua {
     }
 
     @Override
-    public int elegirAtaque(Pokemon defensor) {
+    public int elegirAtaque(Pokemon defensor
+    ) {
         String[] opciones = {"Hidro Bomba", "Surf", "Martillazo", "Aqua Cola"};
 
         String eleccion = (String) JOptionPane.showInputDialog(null, "Elige un ataque", "Elegir Ataque",
@@ -102,24 +125,28 @@ public class Swampert extends Pokemon implements IAgua {
     }
 
     @Override
-    public void recibirDanio(int danio) {
+    public void recibirDanio(int danio
+    ) {
         super.recibirDanio(danio);
     }
 
     @Override
-    public double calcularMultiplicador(Pokemon defensor) {
+    public void calcularMultiplicador(Pokemon defensor
+    ) {
         if (defensor instanceof IFuego) {
-            return 1.5; 
-        } else if (defensor instanceof INormal) {
-            return 0.5; 
+            this.ataqueEsp = 85;
+            this.defensaEsp = 75;
         } else {
-            return 1.0; 
+            this.ataqueEsp = 75;
+            this.defensaEsp = 65;
         }
+
     }
 
     @Override
-    public int elegirAtaqueAleatorio(Pokemon defensor) {
-        int eleccion=(int) (Math.random() * 4);
+    public int elegirAtaqueAleatorio(Pokemon defensor
+    ) {
+        int eleccion = (int) (Math.random() * 4);
         switch (eleccion) {
             case 0:
                 return ataqueHidroBomba(defensor);

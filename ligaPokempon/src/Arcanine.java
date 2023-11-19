@@ -13,6 +13,7 @@ public class Arcanine extends Pokemon implements IFuego {
 
     public Arcanine() {
         nomPokemon = "Arcanine";
+        vidaMaxima = 115;
         vida = 115;
         ataque = 50;
         defensa = 35;
@@ -22,43 +23,70 @@ public class Arcanine extends Pokemon implements IFuego {
 
     @Override
     public int ataqueLanzallamas(Pokemon defensor) {
-        int danioBase = 80;
-        int danioTotal = (danioBase + getAtaqueEsp()) - defensor.defensaEsp;
-        int multiplicadorTipo = (int) calcularMultiplicador(defensor);
-        danioTotal = (int) (danioTotal * multiplicadorTipo);
-        System.out.println(getNomPokemon() + " usa Lanzallamas y causa " + danioTotal + " de daño.");
+        int probabilidad = (int) (Math.random() * 10);
+        int danioTotal;
+        if (probabilidad == 5) {
+            danioTotal = 0;
+            System.out.println(getNomPokemon() + "fallo el ataque");
+        } else {
+            calcularMultiplicador(defensor);
+            int danioBase = 90;
+            danioTotal = (danioBase + getAtaqueEsp()) - defensor.defensaEsp;
+            System.out.println(getNomPokemon() + " usa Lanzallamas y causa " + danioTotal + " de daño.");
+
+        }
         return danioTotal;
     }
 
     @Override
     public int ataqueAnilloIgneo(Pokemon defensor) {
+        int probabilidad = (int) (Math.random() * 10);
+        int danioTotal;
+        if (probabilidad == 5) {
+            danioTotal = 0;
+            System.out.println(getNomPokemon() + "fallo el ataque");
+        } else {
+            calcularMultiplicador(defensor);
+            int danioBase = 80;
+            danioTotal = (danioBase + getAtaque()) - defensor.defensaEsp;
+            System.out.println(getNomPokemon() + " usa Anillo Igneo y causa " + danioTotal + " de daño.");
 
-        int danioBase = 80;
-        int danioTotal = (danioBase + getAtaque()) - defensor.defensaEsp;
-        int multiplicadorTipo = (int) calcularMultiplicador(defensor);
-        danioTotal = (int) (danioTotal * multiplicadorTipo);
-        System.out.println(getNomPokemon() + " usa Anillo Igneo y causa " + danioTotal + " de daño.");
+        }
         return danioTotal;
     }
 
-    // Ataques físicos de tipo Fuego
     @Override
     public int ataqueColmilloIgneo(Pokemon defensor) {
-        int danioBase = 80;
-        int danioTotal = (danioBase + getAtaque()) - defensor.defensa;
-        int multiplicadorTipo = (int) calcularMultiplicador(defensor);
-        danioTotal = (int) (danioTotal * multiplicadorTipo);
-        System.out.println(getNomPokemon() + " usa Colmillo Igneo y causa " + danioTotal + " de daño.");
+        int probabilidad = (int) (Math.random() * 10);
+        int danioTotal;
+        if (probabilidad == 5) {
+            danioTotal = 0;
+            System.out.println(getNomPokemon() + "fallo el ataque");
+        } else {
+            calcularMultiplicador(defensor);
+            int danioBase = 65;
+            danioTotal = (danioBase + getAtaque()) - defensor.defensa;
+
+            System.out.println(getNomPokemon() + " usa Colmillo Igneo y causa " + danioTotal + " de daño.");
+
+        }
         return danioTotal;
     }
 
     @Override
     public int ataquePuñoFuego(Pokemon defensor) {
-        int danioBase = 80;
-        int danioTotal = (danioBase + getAtaque()) - defensor.defensa;
-        int multiplicadorTipo = (int) calcularMultiplicador(defensor);
-        danioTotal = (int) (danioTotal * multiplicadorTipo);
-        System.out.println(getNomPokemon() + " usa Puño Fuego y causa " + danioTotal + " de daño.");
+        int probabilidad = (int) (Math.random() * 10);
+        int danioTotal;
+        if (probabilidad == 5) {
+            danioTotal = 0;
+            System.out.println(getNomPokemon() + "fallo el ataque");
+        } else {
+            calcularMultiplicador(defensor);
+            int danioBase = 70;
+            danioTotal = (danioBase + getAtaque()) - defensor.defensa;
+            System.out.println(getNomPokemon() + " usa Puño Fuego y causa " + danioTotal + " de daño.");
+            return danioTotal;
+        }
         return danioTotal;
     }
 
@@ -73,14 +101,13 @@ public class Arcanine extends Pokemon implements IFuego {
     }
 
     @Override
-    public int elegirAtaque(Pokemon defensor) {
+    public int elegirAtaque(Pokemon defensor
+    ) {
         String[] opciones = {"Lanzallamas", "Anillo Ígneo", "Colmillo Ígneo", "Puño Fuego"};
 
-        // Mostrar un cuadro de diálogo con las opciones y obtener la elección del usuario
         String eleccion = (String) JOptionPane.showInputDialog(null, "Elige un ataque", "Elegir Ataque",
                 JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
 
-        // Mapear la elección del usuario al código de ataque
         switch (eleccion) {
             case "Lanzallamas":
                 return ataqueLanzallamas(defensor);
@@ -94,30 +121,31 @@ public class Arcanine extends Pokemon implements IFuego {
                 return ataquePuñoFuego(defensor);
             default:
 
-                return 0; // Puedes ajustar esto según tus necesidades
+                return 0;
         }
     }
 
     @Override
-    public void recibirDanio(int danio) {
+    public void recibirDanio(int danio
+    ) {
         super.recibirDanio(danio);
     }
 
     @Override
-    public double calcularMultiplicador(Pokemon defensor) {
+    public void calcularMultiplicador(Pokemon defensor) {
         if (defensor instanceof INormal) {
-            return 1.5; 
-        } else if (defensor instanceof IAgua) {
-            return 0.5; 
+            this.ataqueEsp = 85;
+            this.defensaEsp = 70;
         } else {
-            return 1.0;
+            this.ataqueEsp = 80;
+            this.defensaEsp = 70;
         }
     }
 
     @Override
-    public int elegirAtaqueAleatorio(Pokemon defensor) {
+    public int elegirAtaqueAleatorio(Pokemon defensor
+    ) {
 
-        
         int eleccion = (int) (Math.random() * 4);
 
         switch (eleccion) {
@@ -131,7 +159,7 @@ public class Arcanine extends Pokemon implements IFuego {
             case 3:
 
                 return ataquePuñoFuego(defensor);
-            
+
             default:
                 return 0;
         }

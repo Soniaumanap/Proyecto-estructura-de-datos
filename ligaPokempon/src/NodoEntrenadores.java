@@ -8,6 +8,7 @@
  * @author brand
  */
 public class NodoEntrenadores {
+
     private Entrenadores entrenador;
     private NodoEntrenadores atras;
 
@@ -16,23 +17,22 @@ public class NodoEntrenadores {
         this.atras = null;
     }
 
-   
-
     public Entrenadores getEntrenador() {
         return entrenador;
-    }
-
-    public void setEntrenador(Entrenadores entrenador) {
-        this.entrenador = entrenador;
     }
 
     public NodoEntrenadores getAtras() {
         return atras;
     }
 
-    public void setAtras(NodoEntrenadores siguiente) {
-        this.atras = siguiente;
+    public void setAtras(NodoEntrenadores atras) {
+        this.atras = atras;
     }
-    
-            
+
+    @Override
+    public String toString() {
+        return "Entrenador: " + entrenador.getNombre();
+    }
 }
+
+

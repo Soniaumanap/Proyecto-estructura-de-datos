@@ -13,7 +13,7 @@ public class EntrenadorUsu {
 
     private String nombre;
     private ListaPokemonUsu pokemons;
-    private Pokemon pokemonActual; // Nuevo atributo para rastrear el Pokémon actual
+    private Pokemon pokemonActual;
 
     public EntrenadorUsu(String nombre) {
         this.nombre = nombre;
@@ -62,7 +62,7 @@ public class EntrenadorUsu {
         return vivo;
     }
 
-public Pokemon elegirPokemonParaBatalla() {
+    public Pokemon elegirPokemonParaBatalla() {
         if (pokemonActual != null && !pokemonActual.estaVivo()) {
             System.out.println("¡Tu Pokémon actual ha muerto! Debes seleccionar uno nuevo.");
             pokemonActual = null;
@@ -119,5 +119,13 @@ public Pokemon elegirPokemonParaBatalla() {
 
         System.out.println("No hay Pokémon vivos disponibles para la batalla.");
         return null;
+    }
+
+    public void restaurarVidaPokemon() {
+        NodoListaPokemon actual = pokemons.cabeza;
+        while (actual != null) {
+            actual.getPokemon().restaurarVida();
+            actual = actual.getSiguiente();
+        }
     }
 }

@@ -1,5 +1,5 @@
 
-import java.util.Random;
+
 import javax.swing.JOptionPane;
 
 /*
@@ -13,22 +13,21 @@ import javax.swing.JOptionPane;
 public class Main {
 
     public static void main(String[] args) {
-        EntrenadorUsu entrenadorUsuario = new EntrenadorUsu("Brandon");
-        Entrenadores entrenadorAdversario = new Entrenadores("Gary");
 
- 
-        agregarPokemonesAleatorios(entrenadorAdversario);
-        
+//
+        String nombre = JOptionPane.showInputDialog("Digite su nombre");
+        Entrenadores entrenadorUsu = new Entrenadores(nombre);
+        EntrenadorUsu entrenadorUsu2 = new EntrenadorUsu(nombre);
+        ColaTorneo torneo = new ColaTorneo();
+        torneo.encola(entrenadorUsu);
+        seleccionarPokemonsUsu(entrenadorUsu2, entrenadorUsu);
 
-        System.out.println("\nPokémon de " + entrenadorAdversario.getNombre() + ":");
-        mostrarPokemones(entrenadorAdversario);
-        
-           seleccionarPokemonsUsu(entrenadorUsuario);
-        System.out.println("\nPokémon de " + entrenadorUsuario.getNombre()+ ":");
-        mostrarPokemones(entrenadorUsuario);
-        
-        Batalla b1=new Batalla(entrenadorUsuario, entrenadorAdversario);
-        b1.iniciarBatalla();
+        agregarEntrenadoresDePrueba(15, torneo);
+        System.out.println(torneo.toString());
+
+        ejecutarRonda(torneo, "Octavos de Final", entrenadorUsu2);
+
+        System.out.println("¡El ganador del torneo es: " + torneo.atiende() + "!");
     }
 
     private static void agregarPokemonesAleatorios(Entrenadores entrenador) {
@@ -69,7 +68,7 @@ public class Main {
         }
     }
 
-    private static void seleccionarPokemonsUsu(EntrenadorUsu entrenador) {
+    private static void seleccionarPokemonsUsu(EntrenadorUsu entrenador, Entrenadores entrenadorUsu) {
         int sumador = 0;
         while (sumador != 4) {
             Pokemon pokemonSeleccionado = PokemonAleatorios.seleccionarPokemon();
@@ -90,4 +89,70 @@ public class Main {
 
     }
 
+    public static void agregarEntrenadoresDePrueba(int cantidad, ColaTorneo torneo) {
+        String[] nombres = {"Ash", "Gary", "Misty", "Brock", "May", "Dawn", "Red", "Blue", "Leaf", "Serena", "Cynthia", "Entrenador Pescador", "Ethan", "Lyra", "Suarez"};
+        for (int i = 0; i < cantidad; i++) {
+
+            Entrenadores entrenador = new Entrenadores(nombres[i]);
+            agregarPokemonesAleatorios(entrenador);
+            System.out.println(nombres[i]);
+            mostrarPokemones(entrenador);
+            System.out.println("--------------------");
+            torneo.encola(entrenador);
+        }
+
+    }
+
+    public static void ejecutarRonda(ColaTorneo cola, String nombreRonda, EntrenadorUsu entrenador) {
+        System.out.println("---- " + nombreRonda + " ----");
+        int partidos = cola.tamano() / 2;
+        for (int i = 0; i < partidos; i++) {
+            NodoEntrenadores equipo1 = cola.atiende();
+            NodoEntrenadores equipo2 = cola.atiende();
+
+            NodoEntrenadores ganador = simularBatalla(equipo1, equipo2, entrenador);
+
+            cola.encola(ganador.getEntrenador());
+
+
+            System.out.println("Combate " + (i + 1) + ": " + equipo1 + " vs " + equipo2 + " - Ganador: " + ganador);
+        }
+
+
+        if (cola.tamano() > 1) {
+            ejecutarRonda(cola, "Siguiente Ronda", entrenador);
+        }
+    }
+
+    public static NodoEntrenadores simularBatalla(NodoEntrenadores equipo1, NodoEntrenadores equipo2, EntrenadorUsu entrenador) {
+        if (equipo1.getEntrenador().getNombre().equals(entrenador.getNombre())) {
+            Batalla b1 = new Batalla(entrenador, equipo2.getEntrenador());
+            b1.iniciarBatalla();
+            entrenador.restaurarVidaPokemon();
+            equipo1.getEntrenador().restaurarVidaPokemon();
+            equipo2.getEntrenador().restaurarVidaPokemon();
+            if (b1.getGanador() == entrenador) {
+                return equipo1;
+            } else {
+                return equipo2;
+            }
+        } else if (equipo2.getEntrenador().getNombre().equals(entrenador.getNombre())) {
+            Batalla b1 = new Batalla(entrenador, equipo1.getEntrenador());
+            b1.iniciarBatalla();
+            entrenador.restaurarVidaPokemon();
+            equipo1.getEntrenador().restaurarVidaPokemon();
+            equipo2.getEntrenador().restaurarVidaPokemon();
+            if (b1.getGanador() == entrenador) {
+                return equipo2;
+            } else {
+                return equipo1;
+            } 
+        } else {
+            double probabilidad = Math.random();
+            equipo1.getEntrenador().restaurarVidaPokemon();
+            equipo2.getEntrenador().restaurarVidaPokemon();            
+            return probabilidad > 0.5 ? equipo1 : equipo2;
+
+        }
+    }
 }

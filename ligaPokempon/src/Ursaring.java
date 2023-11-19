@@ -5,66 +5,91 @@ import javax.swing.JOptionPane;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 /**
  *
  * @author brand
  */
 public class Ursaring extends Pokemon implements INormal {
-     public Ursaring() {
-        nomPokemon="Ursaring";
-        vida=150;
-        ataque=50;
-        defensa=35;
-        ataqueEsp=70;
-        defensaEsp=60;
+
+    public Ursaring() {
+        nomPokemon = "Ursaring";
+        vidaMaxima = 150;
+
+        vida = 150;
+        ataque = 50;
+        defensa = 35;
+        ataqueEsp = 70;
+        defensaEsp = 60;
     }
-       
+
     @Override
     public int ataqueHiperrayo(Pokemon defensor) {
-        int danioBase = 120;
-        int danioTotal = (danioBase + getAtaqueEsp()) - defensor.defensaEsp;
+        int probabilidad = (int) (Math.random() * 10);
+        int danioTotal;
+        if (probabilidad == 5) {
+            danioTotal = 0;
+            System.out.println(getNomPokemon() + "fallo el ataque");
+        } else {
+            calcularMultiplicador(defensor);
+            int danioBase = 100;
+            danioTotal = (danioBase + getAtaqueEsp()) - defensor.defensaEsp;
 
-        int multiplicadorTipo = (int) calcularMultiplicador(defensor);
-        danioTotal = (int) (danioTotal * multiplicadorTipo);
-
-        System.out.println(getNomPokemon() + " usa Hiperrayo y causa " + danioTotal + " de daño.");
+            System.out.println(getNomPokemon() + " usa Hiperrayo y causa " + danioTotal + " de daño.");
+        }
         return danioTotal;
     }
 
     @Override
     public int ataqueMeteoronola(Pokemon defensor) {
-        int danioBase = 120;
-        int danioTotal = (danioBase + getAtaque()) - defensor.defensaEsp;
+        int probabilidad = (int) (Math.random() * 10);
+        int danioTotal;
+        if (probabilidad == 5) {
+            danioTotal = 0;
+            System.out.println(getNomPokemon() + "fallo el ataque");
+        } else {
+            calcularMultiplicador(defensor);
 
-        int multiplicadorTipo = (int) calcularMultiplicador(defensor);
-        danioTotal = (int) (danioTotal * multiplicadorTipo);
+            int danioBase = 90;
+            danioTotal = (danioBase + getAtaque()) - defensor.defensaEsp;
 
-        System.out.println(getNomPokemon() + " usa Meteorobola y causa " + danioTotal + " de daño.");
+            System.out.println(getNomPokemon() + " usa Meteorobola y causa " + danioTotal + " de daño.");
+        }
         return danioTotal;
     }
 
     @Override
     public int ataquePisoton(Pokemon defensor) {
-        int danioBase = 120;
-        int danioTotal = (danioBase + getAtaque()) - defensor.defensa;
+        int probabilidad = (int) (Math.random() * 10);
+        int danioTotal;
+        if (probabilidad == 5) {
+            danioTotal = 0;
+            System.out.println(getNomPokemon() + "fallo el ataque");
+        } else {
+            calcularMultiplicador(defensor);
 
-        int multiplicadorTipo = (int) calcularMultiplicador(defensor);
-        danioTotal = (int) (danioTotal * multiplicadorTipo);
+            int danioBase = 80;
+            danioTotal = (danioBase + getAtaque()) - defensor.defensa;
 
-        System.out.println(getNomPokemon() + " usa Pisoton y causa " + danioTotal + " de daño.");
+            System.out.println(getNomPokemon() + " usa Pisoton y causa " + danioTotal + " de daño.");
+        }
         return danioTotal;
     }
 
     @Override
     public int ataqueVelocitdadExtrema(Pokemon defensor) {
-        int danioBase = 120;
-        int danioTotal = (danioBase + getAtaque()) - defensor.defensa;
+        int probabilidad = (int) (Math.random() * 10);
+        int danioTotal;
+        if (probabilidad == 5) {
+            danioTotal = 0;
+            System.out.println(getNomPokemon() + "fallo el ataque");
+        } else {
+            calcularMultiplicador(defensor);
 
-        int multiplicadorTipo = (int) calcularMultiplicador(defensor);
-        danioTotal = (int) (danioTotal * multiplicadorTipo);
+            int danioBase = 90;
+            danioTotal = (danioBase + getAtaque()) - defensor.defensa;
 
-        System.out.println(getNomPokemon() + " usa Velocidad Extrema y causa " + danioTotal + " de daño.");
+            System.out.println(getNomPokemon() + " usa Velocidad Extrema y causa " + danioTotal + " de daño.");
+        }
         return danioTotal;
     }
 
@@ -72,14 +97,16 @@ public class Ursaring extends Pokemon implements INormal {
     public String toString() {
         return "Ursaring";
     }
-     @Override
+
+    @Override
     public boolean estaVivo() {
-    return vida > 0;
-}
-     @Override
- public int elegirAtaque(Pokemon defensor) {
+        return vida > 0;
+    }
+
+    @Override
+    public int elegirAtaque(Pokemon defensor) {
         String[] opciones = {"Hiperrayo", "Meteoronola", "Pisotón", "Velocidad Extrema"};
-        
+
         String eleccion = (String) JOptionPane.showInputDialog(null, "Elige un ataque", "Elegir Ataque",
                 JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
 
@@ -96,25 +123,26 @@ public class Ursaring extends Pokemon implements INormal {
                 return 0;
         }
     }
-     @Override
+
+    @Override
     public void recibirDanio(int danio) {
         super.recibirDanio(danio);
-}
-     @Override
-    public double calcularMultiplicador(Pokemon defensor) {
-        if (defensor instanceof IFuego) {
-            return 0.5; 
-        } else if (defensor instanceof IAgua) {
-            return 1.5; 
+    }
+
+    @Override
+    public void calcularMultiplicador(Pokemon defensor) {
+        if (defensor instanceof IAgua) {
+            this.ataqueEsp = 75;
+            this.defensaEsp = 65;
         } else {
-            return 1.0; 
+            this.ataqueEsp = 70;
+            this.defensaEsp = 60;
         }
     }
-    
-     @Override
+
+    @Override
     public int elegirAtaqueAleatorio(Pokemon defensor) {
-      
-        
+
         int eleccion = (int) (Math.random() * 4);
 
         switch (eleccion) {
@@ -126,7 +154,7 @@ public class Ursaring extends Pokemon implements INormal {
                 return ataquePisoton(defensor);
             case 3:
                 return ataqueVelocitdadExtrema(defensor);
-                
+
             default:
                 return 0;
         }
